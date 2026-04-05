@@ -1,6 +1,7 @@
 #import "template/template.typ": *
 #import "template/constants.typ" as const
 #import "template/funcoes-auxiliares/abreviaturas.typ": adicionar-abreviatura
+#import "template/funcoes-auxiliares/abreviaturas.typ": abreviatura
 #show: template
 
 = Espaçamento
@@ -49,24 +50,32 @@ Uma vez, um anão medieval chamado Gimli disse: #quote(text(
 
 = Abreviaturas
 
-Eu consigo adicionar abreviaturas utilizando a função auxiliar
-`adicionar-abreviatura`. Por exemplo, a #adicionar-abreviatura(
+#adicionar-abreviatura(
   chave: "abnt",
   valor: "ABNT",
   descricao: "Associação Brasileira de Normas Toscas",
-) deixa claro que a primeira vez que você utiliza um termo abreviado, ele deve
-ser escrito por extenso e a a abreviatura deve vir logo em seguida entre
-parênteses.
-
-Assim, eu consigo citar coisas interessantes, como #adicionar-abreviatura(
+  artigo: "a",
+)
+#adicionar-abreviatura(
   chave: "fcpremix",
   valor: [F.C.P.R.E.M.I.X],
   descricao: [Uma música legal do The Fall of Troy],
-) ou a técnica de escrever bem código chamada de #adicionar-abreviatura(
+)
+#adicionar-abreviatura(
   chave: "kiss",
   valor: [K.I.S.S.],
   descricao: [Keep It Simple Stupid],
-).
+)
+
+Eu consigo adicionar abreviaturas utilizando a função auxiliar
+`adicionar-abreviatura`. Por exemplo, #abreviatura("abnt") deixa claro que a
+primeira vez que você utiliza um termo abreviado, ele deve ser escrito por
+extenso e a a abreviatura deve vir logo em seguida entre parênteses. A partir da
+segunda vez, #abreviatura("abnt") especifica que ele pode ser escrito na forma
+breve.
+
+Assim, eu consigo citar coisas interessantes, como #abreviatura("fcpremix") ou a
+técnica de escrever bem código chamada de #abreviatura("kiss").
 
 = Símbolos
 

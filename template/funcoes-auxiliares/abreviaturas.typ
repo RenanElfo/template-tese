@@ -3,14 +3,34 @@
 #let abreviaturas() = {
   let lista-de-abreviaturas = state("abreviaturas", (:))
 
-  let adicionar-abreviatura(chave: none, valor: none, descricao: none) = {
+  let adicionar-abreviatura(
+    chave: none,
+    valor: none,
+    descricao: none,
+    artigo: none,
+  ) = {
     checar-parametros(chave, valor, descricao)
     lista-de-abreviaturas.update(old => {
-      old.insert(chave, (valor: valor, descricao: descricao))
+      old.insert(
+        chave,
+        (valor: valor, descricao: descricao, artigo: artigo, first: true),
+      )
       old
     })
+  }
 
-    [#descricao (#valor)]
+  let abreviatura(chave, plural: false) = context {
+    let lista = lista-de-abreviaturas.get()
+    let element = lista.at(chave)
+    if element.at("first") {
+      lista-de-abreviaturas.update(old => {
+        old.at(chave).at("first") = false
+        old
+      })
+      [#element.at("artigo") #element.at("descricao") (#element.at("valor"))]
+    } else [
+      #element.at("artigo") #element.at("valor")
+    ]
   }
 
   let get-abreviaturas() = context {
@@ -20,6 +40,6 @@
     )
   }
 
-  (adicionar-abreviatura, get-abreviaturas)
+  (adicionar-abreviatura, abreviatura, get-abreviaturas)
 }
-#let (adicionar-abreviatura, get-abreviaturas) = abreviaturas()
+#let (adicionar-abreviatura, abreviatura, get-abreviaturas) = abreviaturas()
