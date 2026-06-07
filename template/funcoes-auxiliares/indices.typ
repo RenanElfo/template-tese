@@ -1,7 +1,6 @@
-#import "/parameters.typ": impressao-frente-e-verso
 #import "/template/funcoes-auxiliares/titulo-da-pagina.typ": titulo-da-pagina
 
-#let indices() = {
+#let indices(impressao-frente-e-verso) = {
   let listas = state("listas", ())
 
   let adicionar-figuras(titulo-da-lista, target: none) = {

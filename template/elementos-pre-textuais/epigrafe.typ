@@ -1,11 +1,6 @@
-#let epigrafe() = {
-  import "/parameters.typ" as param
+#let epigrafe(epigrafe-dict) = {
   set align(right)
   set text(hyphenate: false)
-  let epigrafe-dict = dictionary(param).at("epigrafe", default: (
-    frase: "",
-    autor: "",
-  ))
   let frase = epigrafe-dict.at("frase")
   let tipo-frase = type(frase)
   let autor = epigrafe-dict.at("autor")
@@ -44,5 +39,3 @@
 
   pagebreak()
 }
-
-#epigrafe()

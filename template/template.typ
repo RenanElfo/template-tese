@@ -1,16 +1,51 @@
-#let template = doc => {
+#let template(
+  impressao-frente-e-verso: true,
+  referencias-numericas: true,
+  instituicao: [Instituto Xavier para Estudos Avançados],
+  curso: [Curso do Ben 10],
+  tipo-de-trabalho: [Tese],
+  nome-do-titulo: [Doutor em Astrologia Eletrônica],
+  titulo-do-trabalho: [
+    Modelagem analítica da eletrodinâmica astrológica de anões medievais
+  ],
+  nome-do-autor: "Fulano de Tal",
+  localidade: [Xique-Xique -- BA],
+  data-de-aprovacao: datetime(
+    day: 7,
+    month: 10,
+    year: 1582,
+  ),
+  orientador: [Mestre dos Magos],
+  coorientadores: ([Mestre Splinter], [Senhor Miyagi]),
+  palavras-chave: ("Eletrodinâmica", "Astrologia", "Anões", "Medieval"),
+  keywords: ("Electronic", "Astrology", "Dwarves", "Medieval"),
+  texto-resumo: [
+    Uma modelagem analítica da eletrodinâmica de anões medievais foi feita a
+    partir da aplicação das equações de Maxwell na sua forma diferencial na
+    barba de cada um dos indivíduos analisados. Os anões foram categorizados
+    pelo seus signos do zodíaco e a modelagem foi então utilizada para prever a
+    resposta em frequência de cada anão em um grupo de teste.
+  ],
+  epigrafe: (
+    frase: [
+      O problema de citações encontradas na Internet é que elas estão
+      frequentemente erradas
+    ],
+    autor: "Einstein",
+  ),
+  doc,
+) = {
   import "constants.typ" as const
-  import "/parameters.typ" as parameters
   import "/conteudo/resumo.typ" as resumo
 
   set document(
-    title: parameters.titulo-do-trabalho,
-    author: (parameters.nome-do-autor),
+    title: titulo-do-trabalho,
+    author: (nome-do-autor),
     description: [#resumo],
-    keywords: parameters.palavras-chave + parameters.keywords,
+    keywords: palavras-chave + keywords,
   )
 
-  let x-margin = if parameters.impressao-frente-e-verso {
+  let x-margin = if impressao-frente-e-verso {
     (inside: 3cm, outside: 2cm)
   } else {
     (left: 3cm, right: 2cm)
@@ -46,16 +81,26 @@
   }
 
 
-  include "elementos-pre-textuais/capa.typ"
-  include "elementos-pre-textuais/folha-de-rosto.typ"
-  include "elementos-pre-textuais/ficha-catalografica.typ"
-  include "elementos-pre-textuais/folha-de-aprovacao.typ"
+  import "elementos-pre-textuais/capa.typ": capa
+  capa(titulo-do-trabalho, nome-do-autor, instituicao, curso)
+  import "elementos-pre-textuais/folha-de-rosto.typ": folha-de-rosto
+  folha-de-rosto(
+    titulo-do-trabalho,
+    nome-do-autor,
+    orientador,
+    coorientadores,
+    instituicao,
+  )
+  import "elementos-pre-textuais/ficha-catalografica.typ": ficha-catalografica
+  import "elementos-pre-textuais/folha-de-aprovacao.typ": folha-de-aprovacao
   include "elementos-pre-textuais/dedicatoria.typ"
   include "elementos-pre-textuais/agradecimentos.typ"
-  include "elementos-pre-textuais/epigrafe.typ"
+  import "elementos-pre-textuais/epigrafe.typ": epigrafe as epigrafe-func
+  epigrafe-func(epigrafe)
   include "elementos-pre-textuais/resumo.typ"
   include "elementos-pre-textuais/abstract.typ"
-  include "elementos-pre-textuais/indices.typ"
+  import "elementos-pre-textuais/indices.typ": indices
+  indices(impressao-frente-e-verso)
 
   let paginas-pre-textuais = counter("paginas-pre-textuais")
   context {
@@ -68,7 +113,7 @@
   set page(
     header: context {
       let number-alignment = if (
-        parameters.impressao-frente-e-verso == false
+        impressao-frente-e-verso == false
           or calc.even(counter(page).get().first())
       ) {
         right
