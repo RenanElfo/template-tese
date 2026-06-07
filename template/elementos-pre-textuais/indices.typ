@@ -1,74 +1,23 @@
-#import "../constants.typ" as const
-#import "/parameters.typ": impressao-frente-e-verso
+// #import "/conteudo/lista-de-abreviaturas.typ": abreviaturas
+#include "/conteudo/lista-de-simbolos.typ"
+#import "/template/funcoes-auxiliares/indices.typ": indices
+#import "/template/funcoes-auxiliares/titulo-da-pagina.typ": titulo-da-pagina
+#import "/template/funcoes-auxiliares/abreviaturas.typ": get-abreviaturas
+#import "/template/funcoes-auxiliares/simbolos.typ": get-simbolos
+
 #set outline(title: [])
 #show outline.entry: it => link(
   it.element.location(),
   it.indented([#it.prefix() ---], [#it.inner()]),
 )
-#let listas = ()
 
-#listas.push([
-  #show: const.titulo-da-pagina.with(titulo: [Lista de ilustrações])
-  #outline(target: figure.where(kind: image))
-])
+#let (adicionar-figuras, adicionar-explicacoes, imprimir-listas) = indices()
 
-#listas.push([
-  #show: const.titulo-da-pagina.with(titulo: [Lista de tabelas])
-  #outline(target: figure.where(kind: table))
-])
-
-#{
-  import "/conteudo/lista-de-abreviaturas.typ": abreviaturas
-  let abreviaturas-flattened = abreviaturas
-    .sorted(key: t => t.chave)
-    .map(t => (t.abreviatura, t.significado))
-    .flatten()
-
-  listas.push([
-    #show: const.titulo-da-pagina.with(titulo: [Lista de abreviaturas e siglas])
-    #v(1cm)
-    #set align(right)
-    #block(width: 90%)[
-      #set align(left)
-      #grid(
-        columns: (1fr, 4fr),
-        row-gutter: 8pt,
-        column-gutter: 4pt,
-        inset: 1pt,
-        ..abreviaturas-flattened,
-      )
-    ]
-  ])
-}
-
-#{
-  import "/conteudo/lista-de-simbolos.typ": simbolos
-
-  let simbolos-flattened = simbolos
-    .sorted(key: t => t.chave)
-    .map(t => (t.conteudo, t.significado))
-    .flatten()
-
-
-  listas.push([
-    #show: const.titulo-da-pagina.with(titulo: [Lista de símbolos])
-    #v(1cm)
-    #set align(right)
-    #block(width: 90%)[
-      #set align(left)
-      #grid(
-        columns: (1fr, 5fr),
-        row-gutter: 8pt,
-        column-gutter: 4pt,
-        inset: 1pt,
-        ..simbolos-flattened,
-      )
-    ]
-  ])
-}
-
-#listas.reduce((acc, it) => acc + pagebreak() + it)
-#pagebreak(to: if impressao-frente-e-verso { "odd" } else { none })
+#adicionar-figuras([Lista de ilustrações], target: figure.where(kind: image))
+#adicionar-figuras([Lista de tabelas], target: figure.where(kind: table))
+#adicionar-explicacoes(get-abreviaturas())
+#adicionar-explicacoes(get-simbolos())
+#imprimir-listas()
 
 #show outline.entry: it => [
   #let size = if (
@@ -101,6 +50,6 @@
   }
 }
 
-#show: const.titulo-da-pagina.with(titulo: [Sumário])
+#show: titulo-da-pagina.with(titulo: [Sumário])
 #outline()
 #pagebreak()

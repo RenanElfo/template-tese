@@ -37,15 +37,3 @@
 #let SINGLE-SPACING = 0.15em
 #let ONE-AND-HALF-SPACING = 0.5em
 #let DOUBLE-SPACING = 1.0em
-
-#let titulo-da-pagina(it, titulo: none) = {
-  if titulo == none {
-    panic("")
-  }
-  {
-    set text(weight: "bold")
-    align(center)[#text(size: 2em, titulo)]
-  }
-
-  it
-}

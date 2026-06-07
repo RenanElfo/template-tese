@@ -1,4 +1,4 @@
-#import "../constants.typ": titulo-da-pagina
+#import "/template/funcoes-auxiliares/titulo-da-pagina.typ": titulo-da-pagina
 #show: titulo-da-pagina.with(titulo: [Agradecimentos])
 
 Agradeço, primeiramente, a Deus, criador de todas as coisas que nos animamos a

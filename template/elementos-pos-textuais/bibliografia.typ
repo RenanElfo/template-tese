@@ -1,10 +1,10 @@
-#import "/template/constants.typ" as const
+#import "/template/funcoes-auxiliares/titulo-da-pagina.typ": titulo-da-pagina
 #import "/parameters.typ" as parameters
 
 #pagebreak()
 #show bibliography: it => {
   show heading: h => none
-  show: const.titulo-da-pagina.with(titulo: it.title)
+  show: titulo-da-pagina.with(titulo: it.title)
   it
 }
 #bibliography(
