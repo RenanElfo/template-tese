@@ -1,4 +1,4 @@
-#import "template/template.typ": *
+#import "template/template.typ": abnt-figure, template
 #import "template/constants.typ" as const
 #import "template/funcoes-auxiliares/abreviaturas.typ": adicionar-abreviatura
 #import "template/funcoes-auxiliares/abreviaturas.typ": abreviatura
