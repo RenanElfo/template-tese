@@ -80,16 +80,20 @@ técnica de escrever bem código chamada de #abreviatura("kiss").
 = Símbolos
 
 = Figuras
+
+Abaixo temos a @shregory com o grande Shregory ensinando como devemos escrever
+documentos WYSIWYM.
+
 == Imagem
-#figure(
+#abnt-figure(
   fonte: "Não foi preciso.",
   image("/shregory.png", width: 80%),
   caption: [O grande sábio de LaTeX, Shregory, nos ensinando como melhor
     escrever documentos WYSIWYM.],
-)
+) <shregory>
 
 == Tabela
-#figure(
+#abnt-figure(
   fonte: "Vozes da minha cabeça.",
   align(center, table(
     columns: 4,
