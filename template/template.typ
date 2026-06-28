@@ -32,10 +32,10 @@
     bottom: 1pt,
   ))
 
-  show figure: it => {
+  show figure: it => block(breakable: false, {
     text(size: 10em / 12, it.caption)
     it.body
-  }
+  })
 
   show quote.where(block: true): it => {
     set text(size: 10em / 12)
@@ -90,10 +90,7 @@
   }
 }
 
-// Ainda nao tenho certeza se eu quero fazer isso mesmo ou se eu so exponho uma
-// funcao auxiliar que faca isso.
-#let built-in-figure = figure
-#let figure(fonte: none, ..args) = {
+#let abnt-figure(fonte: none, ..args) = {
   if fonte == none {
     panic(
       "
@@ -102,8 +99,8 @@
       ",
     )
   }
-  align(center, block(breakable: false, {
-    built-in-figure(..args)
-    text(size: 10em / 12, { "Fonte: " + fonte })
+  let body = align(center, block(breakable: false, {
+    args.pos().at(0) + text(size: 10em / 12, { "Fonte: " + fonte })
   }))
+  figure(body, ..args.named())
 }
